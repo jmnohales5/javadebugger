@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cómo funciona un depurador de Java</title>
+  <meta name="description" content="Animación interactiva que explica cómo funciona un depurador (debugger) de Java: puntos de interrupción, paso a paso, pila de llamadas y variables.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1 data-i18n="title"></h1>
+    <p class="lead" data-i18n="lead"></p>
+  </div>
+  <div class="top-actions">
+    <button id="autoBtn" class="btn primary" type="button"></button>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- 1. Architecture: who talks to whom -->
+  <section class="card" aria-labelledby="archTitle">
+    <h2 id="archTitle" data-i18n="archTitle"></h2>
+    <div class="arch-grid">
+      <div class="diagram">
+        <div class="node">
+          <strong data-i18n="ideName"></strong>
+          <span class="sub" data-i18n="ideSub"></span>
+        </div>
+        <div class="wire" id="wire">
+          <span class="wire-label" id="wireLabel" aria-hidden="true"></span>
+          <span class="wire-name">JDWP</span>
+        </div>
+        <div class="node">
+          <strong data-i18n="jvmName"></strong>
+          <span class="sub" data-i18n="jvmSub"></span>
+          <span id="jvmStatus" class="status idle"></span>
+        </div>
+      </div>
+      <pre id="log" class="log" aria-hidden="true"></pre>
+    </div>
+    <p class="cmd">
+      <span data-i18n="cmdIntro"></span><br>
+      <code>java -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005 Main</code>
+    </p>
+  </section>
+
+  <div class="layout">
+
+    <!-- 2. The "IDE": toolbar + code + explanation -->
+    <section class="card editor" aria-labelledby="ideTitle">
+      <h2 id="ideTitle" data-i18n="ideTitle"></h2>
+      <div class="toolbar" role="toolbar" aria-label="Debugger controls">
+        <button type="button" class="btn primary" data-act="debug"><span aria-hidden="true">🐞</span> <span data-i18n="bDebug"></span></button>
+        <button type="button" class="btn" data-act="continue" aria-keyshortcuts="F9"><span aria-hidden="true">▶</span> <span data-i18n="bContinue"></span> <kbd>F9</kbd></button>
+        <button type="button" class="btn" data-act="over"     aria-keyshortcuts="F8"><span aria-hidden="true">↷</span> Step Over <kbd>F8</kbd></button>
+        <button type="button" class="btn" data-act="into"     aria-keyshortcuts="F7"><span aria-hidden="true">↓</span> Step Into <kbd>F7</kbd></button>
+        <button type="button" class="btn" data-act="out"      aria-keyshortcuts="Shift+F8"><span aria-hidden="true">↑</span> Step Out <kbd>⇧F8</kbd></button>
+        <button type="button" class="btn danger" data-act="stop"><span aria-hidden="true">■</span> <span data-i18n="bStop"></span></button>
+      </div>
+      <div id="code" class="code" role="group" aria-label="Main.java"></div>
+      <div id="narr" class="narr" aria-live="polite"></div>
+    </section>
+
+    <!-- 3. Debugger panels -->
+    <aside class="side">
+      <section class="card" aria-labelledby="varsTitle">
+        <h2 id="varsTitle" data-i18n="varsTitle"></h2>
+        <ul id="vars" class="list"></ul>
+      </section>
+      <section class="card" aria-labelledby="stackTitle">
+        <h2 id="stackTitle" data-i18n="stackTitle"></h2>
+        <ul id="stack" class="list"></ul>
+      </section>
+      <section class="card" aria-labelledby="consoleTitle">
+        <h2 id="consoleTitle" data-i18n="consoleTitle"></h2>
+        <pre id="console" class="console"></pre>
+      </section>
+    </aside>
+
+  </div>
+</main>
+
+<footer>
+  <p data-i18n="footer"></p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
